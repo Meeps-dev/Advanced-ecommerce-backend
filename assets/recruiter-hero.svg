@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="80" x2="1500" y2="860" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1220"/>
+      <stop offset="1" stop-color="#111B33"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#3DDC97"/>
+      <stop offset="1" stop-color="#5BC0EB"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="20" stdDeviation="25" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" rx="36" fill="url(#bg)"/>
+  <circle cx="1360" cy="120" r="200" fill="#1B2B52" opacity="0.5"/>
+  <circle cx="220" cy="760" r="180" fill="#1D4D74" opacity="0.35"/>
+  <rect x="90" y="90" width="1420" height="720" rx="28" fill="#0F172A" stroke="#24324D" filter="url(#shadow)"/>
+
+  <rect x="130" y="140" width="110" height="36" rx="18" fill="rgba(61,220,151,0.16)" stroke="#3DDC97"/>
+  <text x="185" y="163" fill="#B7F7DD" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle">PORTFOLIO READY</text>
+
+  <text x="130" y="250" fill="#F8FAFC" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="72" font-weight="800">Advanced E-Commerce API</text>
+  <text x="130" y="305" fill="#C7D2FE" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="28" font-weight="500">FastAPI backend with payments, async jobs, caching, and role-based workflows.</text>
+
+  <rect x="130" y="370" width="260" height="160" rx="24" fill="#111C33" stroke="#24324D"/>
+  <rect x="410" y="370" width="260" height="160" rx="24" fill="#111C33" stroke="#24324D"/>
+  <rect x="690" y="370" width="260" height="160" rx="24" fill="#111C33" stroke="#24324D"/>
+  <rect x="970" y="370" width="260" height="160" rx="24" fill="#111C33" stroke="#24324D"/>
+
+  <text x="160" y="425" fill="#3DDC97" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">TESTS</text>
+  <text x="160" y="470" fill="#F8FAFC" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="48" font-weight="800">51 passed</text>
+  <text x="160" y="510" fill="#94A3B8" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="20">3 skipped</text>
+
+  <text x="440" y="425" fill="#5BC0EB" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">SEED DATA</text>
+  <text x="440" y="470" fill="#F8FAFC" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="48" font-weight="800">4 users</text>
+  <text x="440" y="510" fill="#94A3B8" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="20">5 categories, 10 products</text>
+
+  <text x="720" y="425" fill="#F59E0B" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">ARCHITECTURE</text>
+  <text x="720" y="470" fill="#F8FAFC" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="48" font-weight="800">8 services</text>
+  <text x="720" y="510" fill="#94A3B8" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="20">API, worker, beat, DLQ, Flower, DB, Redis, gateway</text>
+
+  <text x="1000" y="425" fill="#F472B6" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">DOMAIN COVERAGE</text>
+  <text x="1000" y="470" fill="#F8FAFC" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="48" font-weight="800">12 routers</text>
+  <text x="1000" y="510" fill="#94A3B8" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="20">Auth, catalog, cart, orders, payments, reviews, more</text>
+
+  <rect x="130" y="580" width="1140" height="150" rx="24" fill="#0C1325" stroke="#24324D"/>
+  <text x="160" y="630" fill="#E2E8F0" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Recruiter narrative</text>
+  <text x="160" y="670" fill="#CBD5E1" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="22">Built to demonstrate modular backend design, production deployment thinking, and end-to-end commerce flow ownership.</text>
+  <text x="160" y="710" fill="#CBD5E1" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="22">The codebase shows orchestration, observability, async processing, and test discipline rather than a simple CRUD demo.</text>
+
+  <rect x="1290" y="580" width="160" height="150" rx="24" fill="url(#accent)"/>
+  <text x="1370" y="650" fill="#08111F" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="28" font-weight="800" text-anchor="middle">Hire</text>
+  <text x="1370" y="685" fill="#08111F" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="28" font-weight="800" text-anchor="middle">me</text>
+</svg>

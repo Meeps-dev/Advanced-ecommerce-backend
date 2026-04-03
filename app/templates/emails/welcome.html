@@ -1,0 +1,40 @@
+{% extends "emails/base.html" %} {% block content %}
+<h2>Welcome to Meeps Store!</h2>
+<p>Hi {{ full_name }},</p>
+<p>Thank you for joining us! We're thrilled to have you as part of the Meeps Store community.</p>
+
+<div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0">
+  <p><strong>Account Information:</strong></p>
+  <p>Email: {{ user_email }}</p>
+  <p>Your account is now active and ready to use.</p>
+</div>
+
+<p><strong>What's Next?</strong></p>
+<ul>
+  <li>Browse our complete catalog of products</li>
+  <li>Add items to your cart and checkout</li>
+  <li>Track your orders in real-time</li>
+  <li>Manage your shipping addresses</li>
+</ul>
+
+<p>If you have any questions or need support, don't hesitate to reach out to our customer service team.</p>
+
+<a
+  href="#"
+  style="
+    background: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 10px;
+  "
+  >Start Shopping</a
+>
+
+<p style="margin-top: 30px; color: #666; font-size: 12px">
+  Best regards,<br />
+  The Meeps Store Team
+</p>
+{% endblock %}

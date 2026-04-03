@@ -1,0 +1,23 @@
+{% extends "emails/base.html" %} {% block content %}
+<h2>Order Confirmed!</h2>
+<p>Hi {{ user_email }},</p>
+<p>Thank you for your purchase. We are processing your order right now.</p>
+<div style="background: #f9f9f9; padding: 15px; border-radius: 5px">
+  <p><strong>Order ID:</strong> #{{ order_id }}</p>
+  <p><strong>Total Amount:</strong> ${{ "%.2f"|format(total_amount) }}</p>
+</div>
+<p>We will notify you once your items are shipped.</p>
+<a
+  href="#"
+  style="
+    background: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 10px;
+  "
+  >View Order Status</a
+>
+{% endblock %}

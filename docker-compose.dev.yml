@@ -1,0 +1,85 @@
+# This is the development override for docker-compose.
+# It adds some local development conveniences like:
+# - Exposing API port to host for local testing
+# - Mounting app code as a volume for live reload
+# - Setting pretty log format with colors for easier debugging
+# Run with: docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+# Note: Don't include any sensitive info or production overrides here since this file may be used in local E2E tests as well
+
+services:
+  # traefik, db, and redis services are unchanged from docker-compose.yml
+  traefik:
+    command:
+      - --api.dashboard=true
+      - --api.insecure=true
+      - --providers.file.filename=/etc/traefik/dynamic.yml
+      - --entrypoints.web.address=:80
+      - --entrypoints.traefik.address=:8080
+    ports:
+      - "80:80"
+      - "8080:8080"
+
+  db:
+    ports:
+      - "5432:5432"
+
+  redis:
+    ports:
+      - "6379:6379"
+
+  # fastapi application with development overrides
+  api:
+    environment:
+      - SEED_DATA=true
+      - LOG_FORMAT=pretty
+      - LOG_SERVICE=api
+      - LOG_SERVICE_COLOR=blue
+      - PY_COLORS=1
+      - FORCE_COLOR=1
+      - TERM=xterm-256color
+      - SENTRY_ENVIRONMENT=docker-dev
+    volumes:
+      - ./app:/app/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload --use-colors
+  # Celery worker with development overrides
+  worker:
+    environment:
+      - LOG_FORMAT=pretty
+      - LOG_SERVICE=worker
+      - LOG_SERVICE_COLOR=magenta
+      - PY_COLORS=1
+      - FORCE_COLOR=1
+      - TERM=xterm-256color
+      - SENTRY_ENVIRONMENT=docker-dev
+
+  beat:
+    environment:
+      - LOG_FORMAT=pretty
+      - LOG_SERVICE=beat
+      - LOG_SERVICE_COLOR=cyan
+      - PY_COLORS=1
+      - FORCE_COLOR=1
+      - TERM=xterm-256color
+      - SENTRY_ENVIRONMENT=docker-dev
+
+  worker-dlq:
+    environment:
+      - LOG_FORMAT=pretty
+      - LOG_SERVICE=worker-dlq
+      - LOG_SERVICE_COLOR=red
+      - PY_COLORS=1
+      - FORCE_COLOR=1
+      - TERM=xterm-256color
+      - SENTRY_ENVIRONMENT=docker-dev
+
+  flower:
+    environment:
+      - LOG_FORMAT=pretty
+      - LOG_SERVICE=flower
+      - LOG_SERVICE_COLOR=yellow
+      - PY_COLORS=1
+      - FORCE_COLOR=1
+      - TERM=xterm-256color
+      - SENTRY_ENVIRONMENT=docker-dev
+    ports:
+      - "5555:5555"

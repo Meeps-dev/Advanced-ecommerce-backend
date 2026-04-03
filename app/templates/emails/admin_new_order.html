@@ -1,0 +1,44 @@
+{% extends "emails/base.html" %} {% block content %}
+<h2>New Order Alert</h2>
+<p>A new order has been paid and requires admin attention.</p>
+
+<div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin: 12px 0">
+  <p><strong>Order ID:</strong> #{{ order_id }}</p>
+  <p><strong>Customer:</strong> {{ customer_email }}</p>
+  <p><strong>Total:</strong> ${{ "%.2f"|format(total) }}</p>
+  <p><strong>Items Count:</strong> {{ items_count }}</p>
+  <p><strong>Created At:</strong> {{ created_at }}</p>
+</div>
+
+<h3 style="margin-top: 20px">Items & Inventory Snapshot</h3>
+<table style="width: 100%; border-collapse: collapse; font-size: 14px">
+  <thead>
+    <tr>
+      <th style="text-align: left; border-bottom: 1px solid #ddd; padding: 8px">Product</th>
+      <th style="text-align: right; border-bottom: 1px solid #ddd; padding: 8px">Qty</th>
+      <th style="text-align: right; border-bottom: 1px solid #ddd; padding: 8px">Unit Price</th>
+      <th style="text-align: right; border-bottom: 1px solid #ddd; padding: 8px">Line Total</th>
+      <th style="text-align: right; border-bottom: 1px solid #ddd; padding: 8px">Inventory Left</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    <tr>
+      <td style="border-bottom: 1px solid #eee; padding: 8px">{{ item.product_name }}</td>
+      <td style="text-align: right; border-bottom: 1px solid #eee; padding: 8px">{{ item.quantity }}</td>
+      <td style="text-align: right; border-bottom: 1px solid #eee; padding: 8px">${{ "%.2f"|format(item.unit_price) }}</td>
+      <td style="text-align: right; border-bottom: 1px solid #eee; padding: 8px">${{ "%.2f"|format(item.line_total) }}</td>
+      <td style="text-align: right; border-bottom: 1px solid #eee; padding: 8px">
+        {% if item.inventory_left is not none %}
+        {{ item.inventory_left }}
+        {% else %}
+        N/A
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<p style="margin-top: 18px">Action: Review fulfillment and shipping for this order.</p>
+{% endblock %}

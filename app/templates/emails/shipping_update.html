@@ -1,0 +1,13 @@
+{% extends "emails/base.html" %} {% block content %}
+<h2>Your Order Is On The Way</h2>
+<p>Hi {{ user_email }},</p>
+<p>Your order has been updated and is now marked as <strong>{{ new_status|title }}</strong>.</p>
+
+<div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0">
+  <p><strong>Order ID:</strong> #{{ order_id }}</p>
+  <p><strong>Status:</strong> {{ new_status|title }}</p>
+</div>
+
+<p>We have started shipment processing for your delivery address on file.</p>
+<p>You will receive another update when delivery is completed.</p>
+{% endblock %}

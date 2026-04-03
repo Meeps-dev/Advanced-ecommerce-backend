@@ -1,0 +1,9 @@
+# Override for local E2E testing only
+# Run tests with: docker compose -f docker-compose.yml -f docker-compose.test.yml up -d
+
+services:
+  api:
+    # Expose port 8000 to host ONLY for local E2E test runs
+    # In production, traffic goes through Traefik gateway on port 80
+    ports:
+      - "8000:8000"
