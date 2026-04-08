@@ -134,6 +134,7 @@ jobs:
           --health-retries 10
     env:
       BASE_URL: http://127.0.0.1:8000
+      E2E_BASE_URL: http://127.0.0.1:8000
       DATABASE_URL: postgresql+psycopg2://postgres:postgres@localhost:5432/ecommerce_db
       RUN_MIGRATIONS: "false"
       SEED_DATA: "false"
