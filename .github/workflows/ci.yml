@@ -20,7 +20,7 @@ env:
   CELERY_RESULT_BACKEND: redis://localhost:6379/0
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -79,7 +79,6 @@ jobs:
           --health-retries 10
     env:
       DATABASE_URL: postgresql+psycopg2://postgres:postgres@localhost:5432/ecommerce_db
-      RUN_MIGRATIONS: "false"
       SEED_DATA: "false"
     steps:
       - name: Checkout
@@ -136,7 +135,6 @@ jobs:
       BASE_URL: http://127.0.0.1:8000
       E2E_BASE_URL: http://127.0.0.1:8000
       DATABASE_URL: postgresql+psycopg2://postgres:postgres@localhost:5432/ecommerce_db
-      RUN_MIGRATIONS: "false"
       SEED_DATA: "false"
     steps:
       - name: Checkout
