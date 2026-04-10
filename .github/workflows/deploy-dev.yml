@@ -1,1 +1,60 @@
+name: Deploy (dev)
 
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-dev
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy to dev (Render)
+    # Only run when CI succeeded AND the CI run was on the develop branch
+    if: >-
+      ${{
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.head_branch == 'develop'
+      }}
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+      - name: Trigger Render deploy (dev)
+        run: |
+          set -euo pipefail
+          echo "Triggering Render deploy via deploy hook..."
+          curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
+
+      - name: Wait for service to be healthy (/health/db)
+        env:
+          BASE_URL: ${{ vars.BASE_URL }}
+        run: |
+          set -euo pipefail
+
+          echo "Waiting for API to become healthy at: ${BASE_URL}/health/db"
+          for i in {1..60}; do
+            echo "Attempt $i/60..."
+
+            # Fetch response (don't fail immediately so we can retry)
+            resp="$(curl -sS "${BASE_URL}/health/db" || true)"
+
+            # Require the expected healthy status in the body
+            if echo "$resp" | grep -q '"status"[[:space:]]*:[[:space:]]*"healthy"'; then
+              echo "Service is healthy."
+              echo "$resp"
+              exit 0
+            fi
+
+            echo "Not healthy yet. Response was:"
+            echo "$resp"
+            sleep 5
+          done
+
+          echo "Service did not become healthy in time."
+          exit 1
