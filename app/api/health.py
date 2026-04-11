@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+from sqlalchemy import text
 from app.dependencies.database import get_db
 
 router = APIRouter(prefix="/health", tags=["Health"])
@@ -9,7 +10,7 @@ def check_db_health(db: Session = Depends(get_db)):
     """Check database connection pool health."""
     try:
         # Simple query to test connection
-        db.execute("SELECT 1")
+        db.execute(text("SELECT 1"))
         
         # Get pool stats
         pool = db.get_bind().pool
