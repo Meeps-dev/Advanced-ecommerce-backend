@@ -52,11 +52,11 @@ RUN chmod +x /app/entrypoint.sh
 
 # Healthcheck for the API container
 HEALTHCHECK --interval=10s --timeout=5s --start-period=10s --retries=3 \
-    CMD curl -f http://localhost:8000/docs || exit 1
+  CMD sh -c 'curl -fsS "http://127.0.0.1:${PORT:-8000}/health/db" || exit 1'
 
 # Entrypoint and default command
 ENTRYPOINT ["/app/entrypoint.sh"]
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
 
 # Create non-root user
 RUN adduser --disabled-password --no-create-home appuser
