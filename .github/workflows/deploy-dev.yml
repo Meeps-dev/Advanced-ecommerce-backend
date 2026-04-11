@@ -4,6 +4,12 @@ on:
   workflow_run:
     workflows: ["CI"]
     types: [completed]
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Why are you deploying? (optional)"
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -15,12 +21,18 @@ concurrency:
 jobs:
   deploy:
     name: Deploy to dev (Render)
-    if: >- 
+    # Auto-deploy only when CI succeeded on a real push to develop (not PR, not re-run noise).
+    # Manual deploy always allowed via workflow_dispatch.
+    if: >-
       ${{
-        github.event.workflow_run.conclusion == 'success' &&
-        github.event.workflow_run.head_branch == 'develop' &&
-        github.event.workflow_run.event == 'push' &&
-        (github.event.workflow_run.pull_requests == null || github.event.workflow_run.pull_requests[0] == null)
+        github.event_name == 'workflow_dispatch' ||
+        (
+          github.event_name == 'workflow_run' &&
+          github.event.workflow_run.conclusion == 'success' &&
+          github.event.workflow_run.head_branch == 'develop' &&
+          github.event.workflow_run.event == 'push' &&
+          (github.event.workflow_run.pull_requests == null || github.event.workflow_run.pull_requests[0] == null)
+        )
       }}
     runs-on: ubuntu-latest
     environment: dev
@@ -32,7 +44,7 @@ jobs:
           echo "Triggering Render deploy via deploy hook..."
           curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
 
-      - name: Wait for service to be healthy (/health/db)
+      - name: Wait for service to be healthy (/api/v1/health/db)
         env:
           BASE_URL: ${{ vars.BASE_URL }}
         run: |
@@ -42,7 +54,7 @@ jobs:
           for i in {1..60}; do
             echo "Attempt $i/60..."
 
-            resp="$(curl -sS ""${BASE_URL}/api/v1/health/db" || true)"
+            resp="$(curl -sS "${BASE_URL}/api/v1/health/db" || true)"
 
             if echo "$resp" | grep -q '"status"[[:space:]]*:[[:space:]]*"healthy"'; then
               echo "Service is healthy."
