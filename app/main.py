@@ -59,6 +59,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Meeps Store API", version="1.0.0", lifespan=lifespan)
 
+
 @app.get("/")
 def root():
     return {"status": "ok"}

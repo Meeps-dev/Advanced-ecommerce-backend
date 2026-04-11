@@ -369,6 +369,17 @@ python -m pytest -q tests
 - Structured logs are enabled for easier debugging in local and production-like environments.
 - The Docker stack includes an API service, background workers, a DLQ worker, beat scheduling, Flower monitoring, and a dedicated gateway.
 
+## CI/CD
+
+This repository uses GitHub Actions to validate changes and deploy by branch promotion:
+
+- Pull requests to `develop`, `staging`, and `main` run the CI workflow.
+- Merges or pushes to `develop` deploy to the Render development service.
+- Merges or pushes to `staging` deploy to the Render staging service.
+- Merges or pushes to `main` deploy to the Render production service after GitHub production approval.
+
+Full setup, promotion flow, secrets, rollback, and troubleshooting notes live in [docs/ci-cd.md](docs/ci-cd.md).
+
 ## Demo Data
 
 The repository includes a seed script that creates realistic demo data for:
