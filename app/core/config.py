@@ -1,8 +1,8 @@
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings, SettingsConfigDict, Field
 
 class Settings(BaseSettings):
     # These match the keys in your .env
-    database_url: str 
+    database_url: str = Field(validation_alias="DATABASE_URL") 
     secret_key: str
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 30
