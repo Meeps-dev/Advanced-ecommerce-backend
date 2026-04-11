@@ -38,11 +38,11 @@ jobs:
         run: |
           set -euo pipefail
 
-          echo "Waiting for API to become healthy at: ${BASE_URL}/health/db"
+          echo "Waiting for API to become healthy at: ${BASE_URL}/api/v1/health/db"
           for i in {1..60}; do
             echo "Attempt $i/60..."
 
-            resp="$(curl -sS "${BASE_URL}/health/db" || true)"
+            resp="$(curl -sS ""${BASE_URL}/api/v1/health/db" || true)"
 
             if echo "$resp" | grep -q '"status"[[:space:]]*:[[:space:]]*"healthy"'; then
               echo "Service is healthy."
